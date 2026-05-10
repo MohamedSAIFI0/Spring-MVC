@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des patients</title>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4">
+
+    <h2>Liste des patients</h2>
+
+    <table class="table table-striped table-bordered mt-3">
+        <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Date naissance</th>
+            <th>Malade</th>
+            <th>Score</th>
+            <th>Médecin</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="patient : ${patients}">
+            <td th:text="${patient.id}"></td>
+            <td th:text="${patient.nom}"></td>
+            <td th:text="${patient.prenom}"></td>
+            <td th:text="${#dates.format(patient.dateNaissance, 'dd/MM/yyyy')}"></td>
+            <td>
+                    <span th:if="${patient.malade}"
+                          class="badge bg-danger">Oui</span>
+                <span th:unless="${patient.malade}"
+                      class="badge bg-success">Non</span>
+            </td>
+            <td th:text="${patient.score}"></td>
+            <td th:text="${patient.medecin != null}
+                             ? ${patient.medecin.nom + ' ' + patient.medecin.prenom}
+                             : 'Non assigné'">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>
